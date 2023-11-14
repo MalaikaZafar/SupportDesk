@@ -1,45 +1,15 @@
 version: "3.8"
 services:
-  selenium-hub:
-    image: selenium/hub
-    ports:
-      - "4442-4444:4442-4444"
-
-  chrome:
-    image: selenium/node-chrome
-    privileged: true
-    shm_size: 1gb
-    environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
-      - SE_NODE_MAX_SESSIONS=10
-    ports:
-      - 5901:5900
-
-    depends_on:
-      - selenium-hub
-      
   mongodb:
     image: 'mongo'
     volumes:
       - data:/data/db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_ROOT_USERNAME=malaikazafarpk
+      - MONGO_INITDB_ROOT_PASSWORD=malaikazafarpk
     ports:
       - '27018:27017'
     restart: always
-  
-  testing:
-    build: 
-      context: .
-      dockerfile: Dockerfile.testing 
-    depends_on:
-      - chrome
-      - mongodb
-      - server
 
   server:
     build: .
