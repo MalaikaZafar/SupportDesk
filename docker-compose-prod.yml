@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  mongodb:
+    image: 'mongo'
+    volumes:
+      - data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=malaikazafarpk
+      - MONGO_INITDB_ROOT_PASSWORD=malaikazafarpk
+    ports:
+      - '27018:27017'
+    restart: always
+
+  server:
+    image: 'malaika2/supportdesk'
+    ports:
+      - "80:5000"
+    restart: always
+    depends_on:
+      - mongodb
+
+volumes:
+  data:
