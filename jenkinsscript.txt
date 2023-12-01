@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+    
+    stages {
+         stage('Checkout') {
+            steps {
+                
+                git branch: 'master', url: 'https://github.com/MalaikaZafar/SupportDesk.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                // Build the image
+                sh "docker compose build"
+            }
+        }
+        stage('Test') {
+            steps {
+                // Run unit tests
+                sh "docker compose run --rm testing"
+            }
+        }
+        
+        
+       
+        stage('Start Docker Compose') {
+            steps {
+                // Start Docker Compose
+                sh "docker compose run server"
+            }
+        }
+    }
+}
